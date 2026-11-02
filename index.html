@@ -45,8 +45,10 @@ button:disabled {
 }
 
 .app {
-    width: min(980px, calc(100% - 28px));
-    margin: clamp(16px, 3vh, 32px) auto;
+    width: calc(100% - clamp(24px, 4vw, 72px));
+    max-width: 1600px;
+    min-height: calc(100svh - 32px);
+    margin: 16px auto;
 }
 
 h1, h2, p { margin-top: 0; }
@@ -94,11 +96,11 @@ h1, h2, p { margin-top: 0; }
 .home-subtitle {
     margin: 0;
     color: #e2d8c4;
-    font-size: 14px;
+    font-size: clamp(16px, 1.4vw, 20px);
 }
 
 .home-content {
-    width: min(720px, 100%);
+    width: min(1040px, 100%);
     margin: 0 auto;
     padding: clamp(24px, 4vw, 42px) clamp(18px, 4vw, 38px);
     text-align: center;
@@ -116,7 +118,7 @@ h1, h2, p { margin-top: 0; }
 .home-description {
     margin: 0;
     color: #746e62;
-    font-size: 14px;
+    font-size: clamp(16px, 1.4vw, 20px);
     line-height: 1.7;
 }
 
@@ -262,43 +264,91 @@ h1, h2, p { margin-top: 0; }
 .question-label {
     margin: 0 0 9px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: clamp(15px, 1.25vw, 19px);
 }
 
-.question {
-    min-height: clamp(112px, 18vh, 220px);
+.bait-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 76px minmax(0, 1fr);
+    align-items: stretch;
+    gap: clamp(8px, 1.4vw, 20px);
+    margin-top: 18px;
+    direction: rtl;
+}
+
+.bait-side {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.side-heading {
+    margin: 0;
+    color: var(--muted);
+    font-size: clamp(14px, 1.15vw, 18px);
+    font-weight: 700;
+    text-align: center;
+}
+
+.bait-question {
+    min-height: clamp(170px, 30vh, 340px);
     display: grid;
     place-items: center;
-    padding: 18px 12px;
+    padding: clamp(16px, 2vw, 30px);
     background: #f8fafc;
-    border: 1px solid #e7edf5;
-    border-radius: 12px;
+    border: 1px solid #dce3ed;
+    border-radius: 14px;
     text-align: center;
     direction: rtl;
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
-    font-size: clamp(25px, 3vw, 42px);
-    line-height: 1.9;
+    font-size: clamp(30px, 3.2vw, 52px);
+    line-height: 2;
 }
 
-.options {
+.bait-options {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 18px;
+    grid-template-columns: 1fr;
+    gap: 10px;
 }
 
 .option {
     width: 100%;
-    min-height: 76px;
-    padding: 14px 18px;
+    min-height: clamp(66px, 10vh, 100px);
+    padding: 12px clamp(12px, 1.5vw, 22px);
     background: #fff;
     border: 1px solid var(--line);
     color: var(--ink);
     text-align: right;
     direction: rtl;
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
-    font-size: clamp(26px, 2.4vw, 33px);
+    font-size: clamp(25px, 2.4vw, 40px);
     line-height: 1.9;
+}
+
+.bait-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    position: sticky;
+    top: 18px;
+    width: clamp(54px, 5vw, 76px);
+    height: clamp(54px, 5vw, 76px);
+    margin-top: clamp(32px, 5vh, 58px);
+    border: 2px solid #d0b477;
+    border-radius: 50%;
+    background: #24365b;
+    color: #fff3d2;
+    box-shadow: 0 4px 14px rgb(36 54 91 / 14%);
+    font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+    font-size: clamp(25px, 2.5vw, 36px);
+    font-weight: 700;
+}
+
+.option:hover:not(:disabled) {
+    border-color: #93b4f5;
+    background: #f8fbff;
 }
 
 .option:hover:not(:disabled) {
@@ -363,19 +413,52 @@ h1, h2, p { margin-top: 0; }
     line-height: 1.6;
 }
 
-@media (max-width: 520px) {
-    .app { margin: 20px auto; }
-    .panel { padding: 17px; }
+@media (max-width: 700px) {
+    .app {
+        width: calc(100% - 16px);
+        min-height: calc(100svh - 16px);
+        margin: 8px auto;
+    }
+
+    .panel { padding: 14px; }
     .home-panel { padding: 0; }
     .home-actions { flex-direction: column; }
     .home-actions > button { width: 100%; }
-    .option { font-size: 26px; }
+
+    .bait-stage {
+        grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+        gap: 5px;
+    }
+
+    .bait-question {
+        min-height: 150px;
+        padding: 9px 5px;
+        font-size: clamp(22px, 5vw, 30px);
+        line-height: 1.8;
+        overflow-wrap: anywhere;
+    }
+
+    .bait-number {
+        width: 38px;
+        height: 38px;
+        margin-top: 34px;
+        font-size: 21px;
+    }
+
+    .option {
+        min-height: 92px;
+        padding: 9px 5px;
+        font-size: clamp(20px, 4.4vw, 27px);
+        line-height: 1.8;
+    }
+
+    .side-heading { font-size: 12px; }
+    .bait-options { gap: 7px; }
 }
 
-@media (max-width: 700px) {
-    .options {
-        grid-template-columns: 1fr;
-    }
+@media (min-width: 1200px) {
+    #quiz { min-height: calc(100svh - 72px); }
+    .bait-stage { min-height: 56vh; }
 }
 
 </style>
@@ -424,9 +507,20 @@ h1, h2, p { margin-top: 0; }
         </div>
         <div class="track"><div id="progressBar"></div></div>
 
-        <p class="question-label">Pilih pasangan yang tepat untuk bait berikut:</p>
-        <div class="question" id="questionText" lang="ar"></div>
-        <div class="options" id="options"></div>
+        <p class="question-label" id="questionLabel">Lengkapi bagian bait yang kosong:</p>
+        <div class="bait-stage">
+            <div class="bait-side" id="rightSide">
+                <p class="side-heading" id="rightHeading">Bagian pertama</p>
+                <div class="bait-question" id="questionText" lang="ar"></div>
+                <div class="bait-options" id="rightOptions"></div>
+            </div>
+            <div class="bait-number" id="baitNumber" lang="ar"></div>
+            <div class="bait-side" id="leftSide">
+                <p class="side-heading" id="leftHeading">Bagian kedua</p>
+                <div class="bait-question" id="questionTextLeft" lang="ar" hidden></div>
+                <div class="bait-options" id="leftOptions"></div>
+            </div>
+        </div>
         <div class="feedback" id="feedback" aria-live="polite"></div>
         <div class="actions">
             <button class="primary" id="nextButton" type="button" disabled>Soal Berikutnya</button>
@@ -586,15 +680,23 @@ function startQuiz() {
 
 function renderQuestion() {
     const item = questions[questionIndex];
-    const correctAnswer = String(item["ثَان"]).trim();
-
+    const askFirst = Math.random() < 0.5;
+    const first = String(item["أول"]).trim();
+    const second = String(item["ثَان"]).trim();
+    const correctAnswer = askFirst ? first : second;
+    const answerKey = askFirst ? "أول" : "ثَان";
+    const questionText = askFirst ? second : first;
     const allAnswers = [...new Set(
-        baitData.map(row => String(row["ثَان"]).trim())
+        baitData.map(row => String(row[answerKey] ?? "").trim()).filter(Boolean)
     )];
 
     const distractors = shuffle(
         allAnswers.filter(answer => answer !== correctAnswer)
     ).slice(0, 3);
+
+    if (distractors.length < 3) {
+        throw new Error("Data tidak memiliki cukup pilihan jawaban berbeda.");
+    }
 
     const choices = shuffle([correctAnswer, ...distractors]);
 
@@ -607,19 +709,24 @@ function renderQuestion() {
     $("progressBar").style.width =
         `${(questionIndex / questions.length) * 100}%`;
 
-    $("questionText").textContent = String(item["أول"]).trim();
-    $("feedback").className = "feedback";
-    $("feedback").textContent = "";
-    $("nextButton").disabled = true;
+    $("questionLabel").textContent = askFirst
+        ? "Lengkapi bagian pertama bait berikut:"
+        : "Lengkapi bagian kedua bait berikut:";
 
-    $("nextButton").textContent =
-        questionIndex === questions.length - 1
-            ? "Lihat Hasil"
-            : "Soal Berikutnya";
+    $("rightHeading").textContent = "Bagian pertama";
+    $("leftHeading").textContent = "Bagian kedua";
 
-    const options = $("options");
-    options.replaceChildren();
+    $("questionText").textContent = askFirst ? "" : first;
+    $("questionText").hidden = askFirst;
+    $("questionTextLeft").textContent = askFirst ? second : "";
+    $("questionTextLeft").hidden = !askFirst;
 
+    $("baitNumber").textContent = String(item["ن"] ?? item["نمر"] ?? "");
+
+    $("rightOptions").replaceChildren();
+    $("leftOptions").replaceChildren();
+
+    const targetOptions = askFirst ? $("rightOptions") : $("leftOptions");
     choices.forEach(answer => {
         const button = document.createElement("button");
 
@@ -632,8 +739,17 @@ function renderQuestion() {
             chooseAnswer(button, answer, correctAnswer)
         );
 
-        options.appendChild(button);
+        targetOptions.appendChild(button);
     });
+
+    $("feedback").className = "feedback";
+    $("feedback").textContent = "";
+    $("nextButton").disabled = true;
+
+    $("nextButton").textContent =
+        questionIndex === questions.length - 1
+            ? "Lihat Hasil"
+            : "Soal Berikutnya";
 }
 
 function chooseAnswer(selectedButton, answer, correctAnswer) {
