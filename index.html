@@ -298,10 +298,10 @@ h1, h2, p { margin-top: 0; }
     align-items: stretch;
     gap: 0;
     direction: rtl;
-    border: 1px solid var(--line);
+    border: 1px solid #c9b995;
     border-radius: 14px;
     overflow: hidden;
-    background: var(--panel);
+    background: #f7f1e5;
 }
 
 .bait-half {
@@ -310,9 +310,8 @@ h1, h2, p { margin-top: 0; }
     height: 100%;
     display: grid;
     place-items: center;
-    padding: clamp(8px, 1.2vw, 18px) 12px;
-    background: var(--panel);
-    text-align: center;
+    padding: clamp(8px, 1.2vw, 18px) 16px;
+    background: #f7f1e5;
     direction: rtl;
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
     font-size: clamp(25px, 3vw, 42px);
@@ -320,8 +319,16 @@ h1, h2, p { margin-top: 0; }
     overflow-wrap: anywhere;
 }
 
+#rightHalf {
+    text-align: left;
+}
+
+#leftHalf {
+    text-align: right;
+}
+
 .bait-half.is-empty {
-    background: #f5f2eb;
+    background: #eee5d5;
 }
 
 .bait-number {
@@ -331,10 +338,10 @@ h1, h2, p { margin-top: 0; }
     align-self: stretch;
     width: auto;
     height: 100%;
-    border-left: 1px solid var(--line);
-    border-right: 1px solid var(--line);
-    background: #f8f6f1;
-    color: #8a806e;
+    border-left: 1px solid #c9b995;
+    border-right: 1px solid #c9b995;
+    background: #efe7d8;
+    color: #938365;
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
     font-size: clamp(18px, 1.7vw, 25px);
     font-weight: 500;
@@ -448,7 +455,7 @@ h1, h2, p { margin-top: 0; }
     }
 
     .bait-half {
-        padding: 8px 4px;
+        padding: 8px 7px;
         font-size: clamp(20px, min(5vw, 4vh), 29px);
         line-height: 1.65;
     }
