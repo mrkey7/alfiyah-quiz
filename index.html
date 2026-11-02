@@ -542,6 +542,23 @@ h1, h2, p { margin-top: 0; }
     }
 }
 
+
+/* PC landscape standar */
+@media (min-width: 701px) and (min-aspect-ratio: 3/2) and (min-height: 501px) {
+    .bait-half {
+        font-size: clamp(32px, 3.5vw, 50px);
+    }
+
+    .options {
+        grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+        column-gap: 0;
+        row-gap: 12px;
+    }
+
+    .option:nth-child(odd) { grid-column: 1; }
+    .option:nth-child(even) { grid-column: 3; }
+}
+
 </style>
 </head>
 <body>
