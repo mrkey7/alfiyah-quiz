@@ -485,7 +485,7 @@ h1, h2, p { margin-top: 0; }
             <div class="home-stats" id="stats" hidden>
                 <div class="home-stat">
                     <strong id="baitCount">0</strong>
-                    <span>Bait tersedia</span>
+                    <span>Bait seirama tersedia</span>
                 </div>
                 <div class="home-stat">
                     <strong id="questionCount">0</strong>
@@ -658,7 +658,7 @@ function prepareData(data) {
 
     baitData = pairedRows.filter(row => {
         const key = rhymeKey(row["أول"]);
-        return firstGroups.get(key).size >= 4 && secondGroups.get(key).size >= 4;
+        return firstGroups.get(key).size >= 4 || secondGroups.get(key).size >= 4;
     });
 
     if (baitData.length < SESSION_QUESTION_COUNT) {
@@ -709,19 +709,27 @@ function startQuiz() {
 
 function renderQuestion() {
     const item = questions[questionIndex];
-    const askFirst = Math.random() < 0.5;
     const first = String(item["أول"]).trim();
     const second = String(item["ثَان"]).trim();
-    const correctAnswer = askFirst ? first : second;
-    const answerKey = askFirst ? "أول" : "ثَان";
-    const knownHalf = askFirst ? second : first;
-    const rhyme = rhymeKey(knownHalf);
-    const allAnswers = [...new Set(
+    const firstRhyme = rhymeKey(second);
+    const secondRhyme = rhymeKey(first);
+    const firstAnswers = [...new Set(
         baitData
-            .filter(row => rhymeKey(row[answerKey]) === rhyme)
-            .map(row => String(row[answerKey] ?? "").trim())
+            .filter(row => rhymeKey(row["أول"]) === firstRhyme)
+            .map(row => String(row["أول"] ?? "").trim())
             .filter(Boolean)
     )];
+    const secondAnswers = [...new Set(
+        baitData
+            .filter(row => rhymeKey(row["ثَان"]) === secondRhyme)
+            .map(row => String(row["ثَان"] ?? "").trim())
+            .filter(Boolean)
+    )];
+    const canAskFirst = firstAnswers.length >= 4;
+    const canAskSecond = secondAnswers.length >= 4;
+    const askFirst = canAskFirst && (!canAskSecond || Math.random() < 0.5);
+    const correctAnswer = askFirst ? first : second;
+    const allAnswers = askFirst ? firstAnswers : secondAnswers;
 
     const distractors = shuffle(
         allAnswers.filter(answer => answer !== correctAnswer)
