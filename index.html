@@ -393,7 +393,9 @@ h1, h2, p { margin-top: 0; }
 
 .feedback {
     display: none;
-    margin-top: 16px;
+    flex: 1;
+    min-width: 0;
+    margin: 0;
     padding: 12px 14px;
     border-radius: 10px;
     font-size: 14px;
@@ -413,7 +415,9 @@ h1, h2, p { margin-top: 0; }
 
 .actions {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
     margin-top: 16px;
 }
 
@@ -481,7 +485,7 @@ h1, h2, p { margin-top: 0; }
     }
 
     .feedback {
-        margin-top: 8px;
+        margin: 0;
         padding: 8px 10px;
         font-size: 12px;
     }
@@ -625,8 +629,8 @@ h1, h2, p { margin-top: 0; }
             <div class="bait-half" id="leftHalf" lang="ar"></div>
         </div>
         <div class="options" id="options"></div>
-        <div class="feedback" id="feedback" aria-live="polite"></div>
         <div class="actions">
+            <div class="feedback" id="feedback" aria-live="polite"></div>
             <button class="primary" id="nextButton" type="button" disabled>Soal Berikutnya</button>
         </div>
     </section>
