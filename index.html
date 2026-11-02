@@ -8,17 +8,18 @@
 <style>
 :root {
     color-scheme: light;
-    --ink: #172033;
-    --muted: #64748b;
-    --line: #dbe2ea;
-    --panel: #ffffff;
-    --page: #f3f6fb;
-    --primary: #1d4ed8;
-    --primary-dark: #1e40af;
-    --good: #15803d;
-    --good-bg: #f0fdf4;
-    --bad: #b91c1c;
-    --bad-bg: #fef2f2;
+    --ink: #24324b;
+    --muted: #746e62;
+    --line: #ded5c3;
+    --panel: #fffdf8;
+    --page: #f2eee5;
+    --primary: #24365b;
+    --primary-dark: #172949;
+    --gold: #b89a5a;
+    --good: #267344;
+    --good-bg: #eff7ef;
+    --bad: #b33b35;
+    --bad-bg: #fbefed;
 }
 
 * { box-sizing: border-box; }
@@ -44,22 +45,150 @@ button:disabled {
 }
 
 .app {
-    width: min(1180px, calc(100% - 28px));
+    width: min(980px, calc(100% - 28px));
     margin: clamp(16px, 3vh, 32px) auto;
 }
 
-header { margin-bottom: 20px; }
+h1, h2, p { margin-top: 0; }
 
-h1 {
-    margin: 0;
-    font-size: clamp(24px, 5vw, 32px);
-    letter-spacing: -.5px;
+.home-panel {
+    padding: 0;
+    overflow: hidden;
+    background: #f8f3e8;
+    border-color: #d9ceb8;
 }
 
-.subtitle {
-    margin: 6px 0 0;
-    color: var(--muted);
+.home-brand {
+    padding: clamp(30px, 5vw, 48px) 20px 32px;
+    background: #1b2e52;
+    color: #fff;
+    text-align: center;
+    border-bottom: 3px solid var(--gold);
+}
+
+.eyebrow {
+    margin: 0 0 12px;
+    color: #ddc58c;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .16em;
+}
+
+.arabic-title {
+    margin: 0;
+    color: #f7e9c7;
+    direction: rtl;
+    font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+    font-size: clamp(34px, 5vw, 54px);
+    font-weight: 600;
+    line-height: 1.7;
+}
+
+.app-title {
+    margin: 4px 0 8px;
+    color: #fff;
+    font-size: clamp(25px, 4vw, 36px);
+    letter-spacing: .13em;
+}
+
+.home-subtitle {
+    margin: 0;
+    color: #e2d8c4;
     font-size: 14px;
+}
+
+.home-content {
+    width: min(720px, 100%);
+    margin: 0 auto;
+    padding: clamp(24px, 4vw, 42px) clamp(18px, 4vw, 38px);
+    text-align: center;
+}
+
+.basmala {
+    margin: 0 0 8px;
+    color: #354361;
+    direction: rtl;
+    font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+    font-size: clamp(23px, 3vw, 31px);
+    line-height: 1.8;
+}
+
+.home-description {
+    margin: 0;
+    color: #746e62;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.home-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.home-stat {
+    padding: 15px 10px;
+    background: #eee7d9;
+    border: 1px solid #e1d7c4;
+    border-radius: 12px;
+}
+
+.home-stat strong {
+    display: block;
+    color: #24365b;
+    font-size: 28px;
+    line-height: 1.25;
+}
+
+.home-stat span {
+    color: #786f5e;
+    font-size: 12px;
+}
+
+.home-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.home-actions .primary {
+    min-width: 210px;
+    min-height: 52px;
+    background: #24365b;
+    font-size: 15px;
+}
+
+.home-actions .secondary {
+    min-height: 52px;
+    background: #e7decc;
+    color: #33415f;
+}
+
+.status {
+    margin-top: 15px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.source-info {
+    margin: 5px 0 0;
+    color: #8a806e;
+    font-size: 11px;
+}
+
+.home-footer {
+    margin: 0;
+    padding: 13px 16px;
+    border-top: 1px solid #e2d8c6;
+    color: #8a806e;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-align: center;
 }
 
 .panel {
@@ -67,7 +196,7 @@ h1 {
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 16px;
-    box-shadow: 0 8px 24px rgb(15 23 42 / 5%);
+    box-shadow: 0 8px 24px rgb(35 42 55 / 5%);
 }
 
 .load-row {
@@ -90,17 +219,8 @@ h1 {
 .primary:hover:not(:disabled) { background: var(--primary-dark); }
 
 .secondary {
-    background: #e8eef8;
-    color: #1e3a8a;
-}
-
-#jsonFile { display: none; }
-
-.status {
-    margin-top: 12px;
-    color: var(--muted);
-    font-size: 13px;
-    overflow-wrap: anywhere;
+    background: #e7decc;
+    color: #33415f;
 }
 
 .stats {
@@ -169,16 +289,16 @@ h1 {
 
 .option {
     width: 100%;
-    min-height: 58px;
-    padding: 12px 16px;
+    min-height: 76px;
+    padding: 14px 18px;
     background: #fff;
     border: 1px solid var(--line);
     color: var(--ink);
     text-align: right;
     direction: rtl;
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
-    font-size: 20px;
-    line-height: 1.8;
+    font-size: clamp(26px, 2.4vw, 33px);
+    line-height: 1.9;
 }
 
 .option:hover:not(:disabled) {
@@ -246,7 +366,10 @@ h1 {
 @media (max-width: 520px) {
     .app { margin: 20px auto; }
     .panel { padding: 17px; }
-    .load-row > button { width: 100%; }
+    .home-panel { padding: 0; }
+    .home-actions { flex-direction: column; }
+    .home-actions > button { width: 100%; }
+    .option { font-size: 26px; }
 }
 
 @media (max-width: 700px) {
@@ -259,26 +382,39 @@ h1 {
 </head>
 <body>
 <main class="app">
-    <header>
-        <h1>Kuis Alfiyah</h1>
-        <p class="subtitle">Latihan memasangkan bagian awal dan akhir bait.</p>
-    </header>
+    <section class="panel home-panel" id="home">
+        <div class="home-brand">
+            <p class="eyebrow">MEDIA PEMBELAJARAN KITAB KLASIK</p>
+            <h1 class="arabic-title" lang="ar">أَلْفِيَّةُ ابْنِ مَالِكٍ</h1>
+            <h2 class="app-title">ALFIYAH QUIZ</h2>
+            <p class="home-subtitle">Latihan hafalan dan pemahaman bait Alfiyah</p>
+        </div>
 
-    <section class="panel" id="loader">
-        <div class="load-row">
-            <button class="primary" id="loadButton" type="button">Muat Ulang Data Online</button>
-            <button class="secondary" id="localButton" type="button">Pilih File Lokal</button>
-            <input id="jsonFile" type="file" accept=".json,application/json">
-            <span id="loadHint" class="subtitle">Sumber online: Google Drive.</span>
+        <div class="home-content">
+            <p class="basmala" lang="ar">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+            <p class="home-description">Belajar, mengingat, dan memahami bait Alfiyah.</p>
+
+            <div class="home-stats" id="stats" hidden>
+                <div class="home-stat">
+                    <strong id="baitCount">0</strong>
+                    <span>Bait tersedia</span>
+                </div>
+                <div class="home-stat">
+                    <strong id="questionCount">0</strong>
+                    <span>Soal per sesi</span>
+                </div>
+            </div>
+
+            <div class="home-actions">
+                <button class="primary" id="startButton" type="button" disabled>Memuat Data...</button>
+                <button class="secondary" id="loadButton" type="button">Muat Ulang Data</button>
+            </div>
+
+            <div class="status" id="status" role="status" aria-live="polite">Menghubungkan ke sumber data online...</div>
+            <p class="source-info" id="loadHint">Sumber data: Google Drive.</p>
         </div>
-        <div class="status" id="status">Data belum dimuat.</div>
-        <div class="stats" id="stats" hidden>
-            <span>Jumlah bait: <strong id="baitCount">0</strong></span>
-            <span>Soal tersedia: <strong id="questionCount">0</strong></span>
-        </div>
-        <div class="notice">
-            Tahap ini belum menyimpan identitas peserta atau riwayat nilai. Nilai hanya dihitung selama sesi kuis berlangsung.
-        </div>
+
+        <p class="home-footer">ALFIYAH QUIZ · BELAJAR DAN MEMAHAMI BAIT</p>
     </section>
 
     <section class="panel" id="quiz">
@@ -303,7 +439,7 @@ h1 {
         <div class="result-detail" id="finalDetail"></div>
         <div class="actions" style="justify-content:center; gap:10px; flex-wrap:wrap;">
             <button class="primary" id="retryButton" type="button">Ulangi Kuis</button>
-            <button class="secondary" id="changeDataButton" type="button">Ganti Data</button>
+            <button class="secondary" id="homeButton" type="button">Kembali ke Beranda</button>
         </div>
     </section>
 </main>
@@ -323,15 +459,15 @@ let questionIndex = 0;
 let correctCount = 0;
 let answered = false;
 
+const startButton = $("startButton");
 const loadButton = $("loadButton");
-const jsonFile = $("jsonFile");
 const status = $("status");
-const loader = $("loader");
+const home = $("home");
 const quiz = $("quiz");
 const result = $("result");
 
+startButton.addEventListener("click", startQuiz);
 loadButton.addEventListener("click", loadOnlineData);
-$("localButton").addEventListener("click", () => jsonFile.click());
 
 function loadOnlineData() {
     loadButton.disabled = true;
@@ -351,10 +487,12 @@ function loadOnlineData() {
     }
 
     function showError(message) {
-        if (finished) return;
-        cleanup();
+        if (!finished) cleanup();
         status.textContent = "Gagal memuat data online: " + message;
         baitData = [];
+        startButton.disabled = true;
+        startButton.textContent = "Data Belum Tersedia";
+        loadButton.textContent = "Coba Muat Ulang";
         quiz.style.display = "none";
         result.style.display = "none";
         $("stats").hidden = true;
@@ -369,7 +507,7 @@ function loadOnlineData() {
         cleanup();
 
         try {
-            prepareData(data, "Sumber online");
+            prepareData(data);
         } catch (error) {
             showError(error.message);
         }
@@ -384,24 +522,7 @@ function loadOnlineData() {
     document.head.appendChild(script);
 }
 
-jsonFile.addEventListener("change", async event => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    try {
-        const data = JSON.parse(await file.text());
-        prepareData(data, file.name);
-    } catch (error) {
-        status.textContent = "Gagal memuat data: " + error.message;
-        $("stats").hidden = true;
-        quiz.style.display = "none";
-        result.style.display = "none";
-    }
-
-    jsonFile.value = "";
-});
-
-function prepareData(data, sourceName) {
+function prepareData(data) {
     if (!data || !Array.isArray(data.rows)) {
         throw new Error("Format JSON tidak sesuai. Properti rows tidak ditemukan.");
     }
@@ -427,14 +548,16 @@ function prepareData(data, sourceName) {
     $("questionCount").textContent = SESSION_QUESTION_COUNT;
     $("stats").hidden = false;
 
-    status.textContent =
-        `Berhasil memuat ${sourceName}. ${baitData.length} bait tersedia.`;
+    status.textContent = `Data berhasil dimuat. ${baitData.length} bait tersedia.`;
 
     $("loadHint").textContent = data.exportedAt
-        ? `Ekspor: ${new Date(data.exportedAt).toLocaleString("id-ID")}`
-        : "Data berhasil dimuat.";
+        ? `Pembaruan data: ${new Date(data.exportedAt).toLocaleString("id-ID")}`
+        : "Sumber data: Google Drive.";
 
-    startQuiz();
+    startButton.disabled = false;
+    startButton.textContent = "Mulai Latihan";
+    loadButton.disabled = false;
+    loadButton.textContent = "Muat Ulang Data";
 }
 
 function shuffle(items) {
@@ -454,7 +577,7 @@ function startQuiz() {
     correctCount = 0;
     answered = false;
 
-    loader.style.display = "block";
+    home.style.display = "none";
     quiz.style.display = "block";
     result.style.display = "none";
 
@@ -570,11 +693,9 @@ function showResult() {
 
 $("retryButton").addEventListener("click", startQuiz);
 
-$("changeDataButton").addEventListener("click", () => {
+$("homeButton").addEventListener("click", () => {
     result.style.display = "none";
-    quiz.style.display = "none";
-    loader.style.display = "block";
-    loadOnlineData();
+    home.style.display = "block";
 });
 
 loadOnlineData();
