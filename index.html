@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172554">
+<title>Kuis Alfiyah</title>
+<style>
+:root {
+    color-scheme: light;
+    --ink: #172033;
+    --muted: #64748b;
+    --line: #dbe2ea;
+    --panel: #ffffff;
+    --page: #f3f6fb;
+    --primary: #1d4ed8;
+    --primary-dark: #1e40af;
+    --good: #15803d;
+    --good-bg: #f0fdf4;
+    --bad: #b91c1c;
+    --bad-bg: #fef2f2;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+button, input { font: inherit; }
+
+button {
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+
+.app {
+    width: min(1180px, calc(100% - 28px));
+    margin: clamp(16px, 3vh, 32px) auto;
+}
+
+header { margin-bottom: 20px; }
+
+h1 {
+    margin: 0;
+    font-size: clamp(24px, 5vw, 32px);
+    letter-spacing: -.5px;
+}
+
+.subtitle {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.panel {
+    padding: clamp(17px, 2vw, 30px);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgb(15 23 42 / 5%);
+}
+
+.load-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.primary, .secondary {
+    min-height: 42px;
+    padding: 10px 16px;
+    font-weight: 650;
+}
+
+.primary {
+    background: var(--primary);
+    color: #fff;
+}
+.primary:hover:not(:disabled) { background: var(--primary-dark); }
+
+.secondary {
+    background: #e8eef8;
+    color: #1e3a8a;
+}
+
+#jsonFile { display: none; }
+
+.status {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.stats strong { color: var(--ink); }
+
+#quiz { display: none; margin-top: 18px; }
+
+.quiz-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.track {
+    height: 7px;
+    margin: 12px 0 22px;
+    overflow: hidden;
+    background: #e8edf5;
+    border-radius: 99px;
+}
+
+#progressBar {
+    width: 0;
+    height: 100%;
+    background: var(--primary);
+    transition: width .2s ease;
+}
+
+.question-label {
+    margin: 0 0 9px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.question {
+    min-height: clamp(112px, 18vh, 220px);
+    display: grid;
+    place-items: center;
+    padding: 18px 12px;
+    background: #f8fafc;
+    border: 1px solid #e7edf5;
+    border-radius: 12px;
+    text-align: center;
+    direction: rtl;
+    font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+    font-size: clamp(25px, 3vw, 42px);
+    line-height: 1.9;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.option {
+    width: 100%;
+    min-height: 58px;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-align: right;
+    direction: rtl;
+    font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+.option:hover:not(:disabled) {
+    border-color: #93b4f5;
+    background: #f8fbff;
+}
+
+.option.correct {
+    border: 2px solid var(--good);
+    background: var(--good-bg);
+}
+
+.option.wrong {
+    border: 2px solid var(--bad);
+    background: var(--bad-bg);
+}
+
+.feedback {
+    display: none;
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.feedback.good {
+    display: block;
+    color: var(--good);
+    background: var(--good-bg);
+}
+
+.feedback.bad {
+    display: block;
+    color: var(--bad);
+    background: var(--bad-bg);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+#result { display: none; margin-top: 18px; text-align: center; }
+
+.result-score {
+    margin: 12px 0 4px;
+    font-size: clamp(38px, 9vw, 56px);
+    font-weight: 750;
+    letter-spacing: -2px;
+}
+
+.result-detail { color: var(--muted); }
+
+.notice {
+    margin-top: 18px;
+    padding: 12px 14px;
+    border-left: 3px solid #93b4f5;
+    background: #eff6ff;
+    color: #334155;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+@media (max-width: 520px) {
+    .app { margin: 20px auto; }
+    .panel { padding: 17px; }
+    .load-row > button { width: 100%; }
+}
+
+@media (max-width: 700px) {
+    .options {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+</head>
+<body>
+<main class="app">
+    <header>
+        <h1>Kuis Alfiyah</h1>
+        <p class="subtitle">Latihan memasangkan bagian awal dan akhir bait.</p>
+    </header>
+
+    <section class="panel" id="loader">
+        <div class="load-row">
+            <button class="primary" id="loadButton" type="button">Muat Ulang Data Online</button>
+            <button class="secondary" id="localButton" type="button">Pilih File Lokal</button>
+            <input id="jsonFile" type="file" accept=".json,application/json">
+            <span id="loadHint" class="subtitle">Sumber online: Google Drive.</span>
+        </div>
+        <div class="status" id="status">Data belum dimuat.</div>
+        <div class="stats" id="stats" hidden>
+            <span>Jumlah bait: <strong id="baitCount">0</strong></span>
+            <span>Soal tersedia: <strong id="questionCount">0</strong></span>
+        </div>
+        <div class="notice">
+            Tahap ini belum menyimpan identitas peserta atau riwayat nilai. Nilai hanya dihitung selama sesi kuis berlangsung.
+        </div>
+    </section>
+
+    <section class="panel" id="quiz">
+        <div class="quiz-top">
+            <span id="questionNumber">Soal 1</span>
+            <span>Benar: <strong id="score">0</strong></span>
+        </div>
+        <div class="track"><div id="progressBar"></div></div>
+
+        <p class="question-label">Pilih pasangan yang tepat untuk bait berikut:</p>
+        <div class="question" id="questionText" lang="ar"></div>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback" aria-live="polite"></div>
+        <div class="actions">
+            <button class="primary" id="nextButton" type="button" disabled>Soal Berikutnya</button>
+        </div>
+    </section>
+
+    <section class="panel" id="result">
+        <p class="question-label">Sesi kuis selesai</p>
+        <div class="result-score" id="finalScore">0/0</div>
+        <div class="result-detail" id="finalDetail"></div>
+        <div class="actions" style="justify-content:center; gap:10px; flex-wrap:wrap;">
+            <button class="primary" id="retryButton" type="button">Ulangi Kuis</button>
+            <button class="secondary" id="changeDataButton" type="button">Ganti Data</button>
+        </div>
+    </section>
+</main>
+
+<script>
+
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const DATA_URL = "https://script.google.com/macros/s/AKfycbzv4VcmSMEKcabdxlM6DHbEVGjYXn55Gxl-Sq8KMtdWDsRVoGyJmy16WnTBLImpQ907eA/exec";
+const SESSION_QUESTION_COUNT = 5;
+
+let baitData = [];
+let questions = [];
+let questionIndex = 0;
+let correctCount = 0;
+let answered = false;
+
+const loadButton = $("loadButton");
+const jsonFile = $("jsonFile");
+const status = $("status");
+const loader = $("loader");
+const quiz = $("quiz");
+const result = $("result");
+
+loadButton.addEventListener("click", loadOnlineData);
+$("localButton").addEventListener("click", () => jsonFile.click());
+
+function loadOnlineData() {
+    loadButton.disabled = true;
+    status.textContent = "Menghubungkan ke sumber data online...";
+
+    const callbackName = "__alJsonp_" + Date.now();
+    const script = document.createElement("script");
+    let finished = false;
+
+    function cleanup() {
+        if (finished) return;
+        finished = true;
+        clearTimeout(timeout);
+        delete window[callbackName];
+        script.remove();
+        loadButton.disabled = false;
+    }
+
+    function showError(message) {
+        if (finished) return;
+        cleanup();
+        status.textContent = "Gagal memuat data online: " + message;
+        baitData = [];
+        quiz.style.display = "none";
+        result.style.display = "none";
+        $("stats").hidden = true;
+    }
+
+    const timeout = setTimeout(() => {
+        showError("Waktu koneksi habis atau respons JSONP tidak valid.");
+    }, 15000);
+
+    window[callbackName] = data => {
+        if (finished) return;
+        cleanup();
+
+        try {
+            prepareData(data, "Sumber online");
+        } catch (error) {
+            showError(error.message);
+        }
+    };
+
+    script.onerror = () => showError("Web App tidak dapat diakses.");
+
+    script.src = DATA_URL
+        + "?callback=" + encodeURIComponent(callbackName)
+        + "&_=" + Date.now();
+
+    document.head.appendChild(script);
+}
+
+jsonFile.addEventListener("change", async event => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+        const data = JSON.parse(await file.text());
+        prepareData(data, file.name);
+    } catch (error) {
+        status.textContent = "Gagal memuat data: " + error.message;
+        $("stats").hidden = true;
+        quiz.style.display = "none";
+        result.style.display = "none";
+    }
+
+    jsonFile.value = "";
+});
+
+function prepareData(data, sourceName) {
+    if (!data || !Array.isArray(data.rows)) {
+        throw new Error("Format JSON tidak sesuai. Properti rows tidak ditemukan.");
+    }
+
+    baitData = data.rows.filter(row =>
+        String(row["أول"] ?? "").trim() &&
+        String(row["ثَان"] ?? "").trim()
+    );
+
+    const answerSet = new Set(
+        baitData.map(row => String(row["ثَان"]).trim())
+    );
+
+    if (baitData.length < SESSION_QUESTION_COUNT) {
+        throw new Error("Jumlah bait valid kurang dari 5.");
+    }
+
+    if (answerSet.size < 4) {
+        throw new Error("Diperlukan minimal 4 jawaban berbeda.");
+    }
+
+    $("baitCount").textContent = baitData.length;
+    $("questionCount").textContent = SESSION_QUESTION_COUNT;
+    $("stats").hidden = false;
+
+    status.textContent =
+        `Berhasil memuat ${sourceName}. ${baitData.length} bait tersedia.`;
+
+    $("loadHint").textContent = data.exportedAt
+        ? `Ekspor: ${new Date(data.exportedAt).toLocaleString("id-ID")}`
+        : "Data berhasil dimuat.";
+
+    startQuiz();
+}
+
+function shuffle(items) {
+    const array = [...items];
+
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
+}
+
+function startQuiz() {
+    questions = shuffle(baitData).slice(0, SESSION_QUESTION_COUNT);
+    questionIndex = 0;
+    correctCount = 0;
+    answered = false;
+
+    loader.style.display = "block";
+    quiz.style.display = "block";
+    result.style.display = "none";
+
+    renderQuestion();
+}
+
+function renderQuestion() {
+    const item = questions[questionIndex];
+    const correctAnswer = String(item["ثَان"]).trim();
+
+    const allAnswers = [...new Set(
+        baitData.map(row => String(row["ثَان"]).trim())
+    )];
+
+    const distractors = shuffle(
+        allAnswers.filter(answer => answer !== correctAnswer)
+    ).slice(0, 3);
+
+    const choices = shuffle([correctAnswer, ...distractors]);
+
+    answered = false;
+
+    $("questionNumber").textContent =
+        `Soal ${questionIndex + 1} dari ${questions.length}`;
+
+    $("score").textContent = correctCount;
+    $("progressBar").style.width =
+        `${(questionIndex / questions.length) * 100}%`;
+
+    $("questionText").textContent = String(item["أول"]).trim();
+    $("feedback").className = "feedback";
+    $("feedback").textContent = "";
+    $("nextButton").disabled = true;
+
+    $("nextButton").textContent =
+        questionIndex === questions.length - 1
+            ? "Lihat Hasil"
+            : "Soal Berikutnya";
+
+    const options = $("options");
+    options.replaceChildren();
+
+    choices.forEach(answer => {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "option";
+        button.lang = "ar";
+        button.textContent = answer;
+
+        button.addEventListener("click", () =>
+            chooseAnswer(button, answer, correctAnswer)
+        );
+
+        options.appendChild(button);
+    });
+}
+
+function chooseAnswer(selectedButton, answer, correctAnswer) {
+    if (answered) return;
+    answered = true;
+
+    const buttons = [...$("options").children];
+
+    buttons.forEach(button => {
+        button.disabled = true;
+
+        if (button.textContent === correctAnswer) {
+            button.classList.add("correct");
+        }
+    });
+
+    if (answer === correctAnswer) {
+        correctCount++;
+        $("feedback").className = "feedback good";
+        $("feedback").textContent = "Benar. Pasangan bait tepat.";
+    } else {
+        selectedButton.classList.add("wrong");
+        $("feedback").className = "feedback bad";
+        $("feedback").textContent =
+            "Belum tepat. Jawaban benar ditandai warna hijau.";
+    }
+
+    $("score").textContent = correctCount;
+    $("nextButton").disabled = false;
+
+    $("progressBar").style.width =
+        `${((questionIndex + 1) / questions.length) * 100}%`;
+}
+
+$("nextButton").addEventListener("click", () => {
+    if (!answered) return;
+
+    questionIndex++;
+
+    if (questionIndex < questions.length) {
+        renderQuestion();
+    } else {
+        showResult();
+    }
+});
+
+function showResult() {
+    quiz.style.display = "none";
+    result.style.display = "block";
+
+    const total = questions.length;
+    const percent = Math.round(correctCount / total * 100);
+
+    $("finalScore").textContent = `${correctCount}/${total}`;
+    $("finalDetail").textContent = `Jawaban benar ${percent}%.`;
+}
+
+$("retryButton").addEventListener("click", startQuiz);
+
+$("changeDataButton").addEventListener("click", () => {
+    result.style.display = "none";
+    quiz.style.display = "none";
+    loader.style.display = "block";
+    loadOnlineData();
+});
+
+loadOnlineData();
+
+</script>
+</body>
+</html>
