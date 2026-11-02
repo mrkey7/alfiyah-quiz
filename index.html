@@ -23,6 +23,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 
 body {
     margin: 0;
@@ -626,7 +627,10 @@ function prepareData(data) {
         String(row["ثَان"] ?? "").trim()
     );
 
-    const answerSet = new Set(
+    const firstSet = new Set(
+        baitData.map(row => String(row["أول"]).trim())
+    );
+    const secondSet = new Set(
         baitData.map(row => String(row["ثَان"]).trim())
     );
 
@@ -634,8 +638,8 @@ function prepareData(data) {
         throw new Error("Jumlah bait valid kurang dari 5.");
     }
 
-    if (answerSet.size < 4) {
-        throw new Error("Diperlukan minimal 4 jawaban berbeda.");
+    if (firstSet.size < 4 || secondSet.size < 4) {
+        throw new Error("Setiap bagian bait memerlukan minimal 4 jawaban berbeda.");
     }
 
     $("baitCount").textContent = baitData.length;
