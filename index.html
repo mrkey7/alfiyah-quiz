@@ -277,54 +277,18 @@ h1, h2, p { margin-top: 0; }
     direction: rtl;
 }
 
-.bait-side {
+.bait-half {
     min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.side-heading {
-    margin: 0;
-    color: var(--muted);
-    font-size: clamp(14px, 1.15vw, 18px);
-    font-weight: 700;
-    text-align: center;
-}
-
-.bait-question {
-    min-height: clamp(170px, 30vh, 340px);
+    min-height: clamp(112px, 18vh, 220px);
     display: grid;
     place-items: center;
-    padding: clamp(16px, 2vw, 30px);
-    background: #f8fafc;
-    border: 1px solid #dce3ed;
-    border-radius: 14px;
+    padding: 18px 12px;
     text-align: center;
     direction: rtl;
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
-    font-size: clamp(30px, 3.2vw, 52px);
-    line-height: 2;
-}
-
-.bait-options {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-}
-
-.option {
-    width: 100%;
-    min-height: clamp(66px, 10vh, 100px);
-    padding: 12px clamp(12px, 1.5vw, 22px);
-    background: #fff;
-    border: 1px solid var(--line);
-    color: var(--ink);
-    text-align: right;
-    direction: rtl;
-    font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
-    font-size: clamp(25px, 2.4vw, 40px);
+    font-size: clamp(25px, 3vw, 42px);
     line-height: 1.9;
+    overflow-wrap: anywhere;
 }
 
 .bait-number {
@@ -332,11 +296,8 @@ h1, h2, p { margin-top: 0; }
     align-items: center;
     justify-content: center;
     align-self: center;
-    position: sticky;
-    top: 18px;
     width: clamp(54px, 5vw, 76px);
     height: clamp(54px, 5vw, 76px);
-    margin-top: clamp(32px, 5vh, 58px);
     border: 2px solid #d0b477;
     border-radius: 50%;
     background: #24365b;
@@ -345,6 +306,27 @@ h1, h2, p { margin-top: 0; }
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
     font-size: clamp(25px, 2.5vw, 36px);
     font-weight: 700;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.option {
+    width: 100%;
+    min-height: 76px;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-align: right;
+    direction: rtl;
+    font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
+    font-size: clamp(26px, 2.4vw, 33px);
+    line-height: 1.9;
 }
 
 .option:hover:not(:disabled) {
@@ -427,23 +409,26 @@ h1, h2, p { margin-top: 0; }
     .home-actions > button { width: 100%; }
 
     .bait-stage {
-        grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) 38px minmax(0, 1fr);
         gap: 5px;
     }
 
-    .bait-question {
-        min-height: 150px;
+    .bait-half {
+        min-height: 120px;
         padding: 9px 5px;
         font-size: clamp(22px, 5vw, 30px);
         line-height: 1.8;
-        overflow-wrap: anywhere;
     }
 
     .bait-number {
         width: 38px;
         height: 38px;
-        margin-top: 34px;
         font-size: 21px;
+    }
+
+    .options {
+        grid-template-columns: 1fr;
+        gap: 7px;
     }
 
     .option {
@@ -452,9 +437,6 @@ h1, h2, p { margin-top: 0; }
         font-size: clamp(20px, 4.4vw, 27px);
         line-height: 1.8;
     }
-
-    .side-heading { font-size: 12px; }
-    .bait-options { gap: 7px; }
 }
 
 @media (min-width: 1200px) {
@@ -508,20 +490,13 @@ h1, h2, p { margin-top: 0; }
         </div>
         <div class="track"><div id="progressBar"></div></div>
 
-        <p class="question-label" id="questionLabel">Lengkapi bagian bait yang kosong:</p>
+        <p class="question-label">Lengkapi bait berikut:</p>
         <div class="bait-stage">
-            <div class="bait-side" id="rightSide">
-                <p class="side-heading" id="rightHeading">Bagian pertama</p>
-                <div class="bait-question" id="questionText" lang="ar"></div>
-                <div class="bait-options" id="rightOptions"></div>
-            </div>
+            <div class="bait-half" id="rightHalf" lang="ar"></div>
             <div class="bait-number" id="baitNumber" lang="ar"></div>
-            <div class="bait-side" id="leftSide">
-                <p class="side-heading" id="leftHeading">Bagian kedua</p>
-                <div class="bait-question" id="questionTextLeft" lang="ar" hidden></div>
-                <div class="bait-options" id="leftOptions"></div>
-            </div>
+            <div class="bait-half" id="leftHalf" lang="ar"></div>
         </div>
+        <div class="options" id="options"></div>
         <div class="feedback" id="feedback" aria-live="polite"></div>
         <div class="actions">
             <button class="primary" id="nextButton" type="button" disabled>Soal Berikutnya</button>
@@ -689,7 +664,6 @@ function renderQuestion() {
     const second = String(item["ثَان"]).trim();
     const correctAnswer = askFirst ? first : second;
     const answerKey = askFirst ? "أول" : "ثَان";
-    const questionText = askFirst ? second : first;
     const allAnswers = [...new Set(
         baitData.map(row => String(row[answerKey] ?? "").trim()).filter(Boolean)
     )];
@@ -713,24 +687,13 @@ function renderQuestion() {
     $("progressBar").style.width =
         `${(questionIndex / questions.length) * 100}%`;
 
-    $("questionLabel").textContent = askFirst
-        ? "Lengkapi bagian pertama bait berikut:"
-        : "Lengkapi bagian kedua bait berikut:";
-
-    $("rightHeading").textContent = "Bagian pertama";
-    $("leftHeading").textContent = "Bagian kedua";
-
-    $("questionText").textContent = askFirst ? "" : first;
-    $("questionText").hidden = askFirst;
-    $("questionTextLeft").textContent = askFirst ? second : "";
-    $("questionTextLeft").hidden = !askFirst;
-
+    $("rightHalf").textContent = askFirst ? "" : first;
+    $("leftHalf").textContent = askFirst ? second : "";
     $("baitNumber").textContent = String(item["ن"] ?? item["نمر"] ?? "");
 
-    $("rightOptions").replaceChildren();
-    $("leftOptions").replaceChildren();
+    const options = $("options");
+    options.replaceChildren();
 
-    const targetOptions = askFirst ? $("rightOptions") : $("leftOptions");
     choices.forEach(answer => {
         const button = document.createElement("button");
 
@@ -743,7 +706,7 @@ function renderQuestion() {
             chooseAnswer(button, answer, correctAnswer)
         );
 
-        targetOptions.appendChild(button);
+        options.appendChild(button);
     });
 
     $("feedback").className = "feedback";
