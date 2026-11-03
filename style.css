@@ -594,3 +594,28 @@ h1, h2, p { margin-top: 0; }
         margin-top: 6px;
     }
 }
+
+/* Android dan perangkat sentuh potret: bait ditumpuk atas-bawah */
+@media (pointer: coarse) and (orientation: portrait) {
+    .bait-stage {
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
+        min-height: clamp(250px, 40vh, 380px);
+    }
+
+    #rightHalf {
+        grid-row: 1 !important;
+        grid-column: 1 !important;
+        border-left: 0;
+        border-bottom: 1px solid #c9b995;
+    }
+
+    #leftHalf {
+        grid-row: 2 !important;
+        grid-column: 1 !important;
+    }
+
+    .bait-half {
+        min-height: 0;
+    }
+}
