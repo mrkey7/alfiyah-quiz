@@ -231,7 +231,8 @@ h1, h2, p { margin-top: 0; }
     flex: 1 1 auto;
     min-height: 0;
     margin-top: 8px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: minmax(0, 1fr);
     align-items: stretch;
     gap: 0;
     direction: rtl;
@@ -258,7 +259,14 @@ h1, h2, p { margin-top: 0; }
 }
 
 #rightHalf {
+    grid-row: 1;
+    grid-column: 1;
     border-left: 1px solid #c9b995;
+}
+
+#leftHalf {
+    grid-row: 1;
+    grid-column: 2;
 }
 
 .bait-half.is-empty {
