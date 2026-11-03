@@ -21,10 +21,10 @@
             <p class="basmala" lang="ar">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
             <p class="home-description">Pilih bagian Alfiyyah yang ingin dipelajari.</p>
             <div class="section-choices">
-                <button class="section-choice" data-section="awal" type="button" disabled><strong>Alfiyyah Awal</strong><span>Memuat data...</span></button>
-                <button class="section-choice" data-section="tsani" type="button" disabled><strong>Alfiyyah Tsani</strong><span>Memuat data...</span></button>
-                <button class="section-choice" data-section="tsalits" type="button" disabled><strong>Alfiyyah Tsalits</strong><span>Memuat data...</span></button>
-                <button class="section-choice" data-section="semua" type="button" disabled><strong>Lewati · Semua</strong><span>Memuat data...</span></button>
+                <button class="section-choice" data-section="awal" type="button" disabled><strong lang="ar">الألفية الأولى</strong><span lang="ar">الأبيات ١–٣٣٤</span></button>
+                <button class="section-choice" data-section="tsani" type="button" disabled><strong lang="ar">الألفية الثانية</strong><span lang="ar">الأبيات ٣٣٥–٦٦٨</span></button>
+                <button class="section-choice" data-section="tsalits" type="button" disabled><strong lang="ar">الألفية الثالثة</strong><span lang="ar">الأبيات ٦٦٩–١٠٠٣</span></button>
+                <button class="section-choice" data-section="semua" type="button" disabled><strong lang="ar">الألفية كاملة</strong><span lang="ar">١٠٠٣ بيت</span></button>
             </div>
             <div class="status" id="status" role="status" aria-live="polite">Memuat data Alfiyyah...</div>
         </div>
@@ -34,7 +34,9 @@
     <section class="panel" id="quiz">
         <div class="quiz-top">
             <span id="questionNumber">Soal 1</span>
+            <span>Kuis tersedia: <strong id="quizAvailable">0</strong></span>
             <span>Benar: <strong id="score">0</strong></span>
+            <span>Waktu: <strong id="timer">00:00</strong></span>
         </div>
         <div class="track"><div id="progressBar"></div></div>
 
