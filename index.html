@@ -743,7 +743,7 @@ h1, h2, p { margin-top: 0; }
             </div>
 
             <div class="status" id="status" role="status" aria-live="polite">Menghubungkan ke sumber data online...</div>
-            <p class="source-info" id="loadHint">Sumber data: Google Drive.</p>
+            <p class="source-info" id="loadHint">Sumber data: ALFIYYAH.json.</p>
         </div>
 
         <p class="home-footer">ALFIYAH QUIZ · BELAJAR DAN MEMAHAMI BAIT</p>
@@ -786,7 +786,7 @@ h1, h2, p { margin-top: 0; }
 
 const $ = id => document.getElementById(id);
 
-const DATA_URL = "https://script.google.com/macros/s/AKfycbzv4VcmSMEKcabdxlM6DHbEVGjYXn55Gxl-Sq8KMtdWDsRVoGyJmy16WnTBLImpQ907eA/exec";
+const DATA_URL = "./ALFIYYAH.json";
 const SESSION_QUESTION_COUNT = 5;
 
 let baitData = [];
@@ -805,26 +805,29 @@ const result = $("result");
 startButton.addEventListener("click", startQuiz);
 loadButton.addEventListener("click", loadOnlineData);
 
-function loadOnlineData() {
+async function loadOnlineData() {
     loadButton.disabled = true;
-    status.textContent = "Menghubungkan ke sumber data online...";
+    status.textContent = "Memuat data Alfiyah...";
 
-    const callbackName = "__alJsonp_" + Date.now();
-    const script = document.createElement("script");
-    let finished = false;
+    try {
+        let data;
 
-    function cleanup() {
-        if (finished) return;
-        finished = true;
-        clearTimeout(timeout);
-        delete window[callbackName];
-        script.remove();
-        loadButton.disabled = false;
-    }
+        try {
+            const response = await fetch(DATA_URL, { cache: "no-cache" });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            data = await response.json();
+        } catch (networkError) {
+            if (!("caches" in window)) throw networkError;
 
-    function showError(message) {
-        if (!finished) cleanup();
-        status.textContent = "Gagal memuat data online: " + message;
+            const cached = await caches.match(new URL(DATA_URL, document.baseURI).href);
+            if (!cached) throw networkError;
+
+            data = await cached.json();
+        }
+
+        prepareData(data);
+    } catch (error) {
+        status.textContent = "Gagal memuat data: " + error.message;
         baitData = [];
         startButton.disabled = true;
         startButton.textContent = "Data Belum Tersedia";
@@ -832,30 +835,9 @@ function loadOnlineData() {
         quiz.style.display = "none";
         result.style.display = "none";
         $("stats").hidden = true;
+    } finally {
+        loadButton.disabled = false;
     }
-
-    const timeout = setTimeout(() => {
-        showError("Waktu koneksi habis atau respons JSONP tidak valid.");
-    }, 15000);
-
-    window[callbackName] = data => {
-        if (finished) return;
-        cleanup();
-
-        try {
-            prepareData(data);
-        } catch (error) {
-            showError(error.message);
-        }
-    };
-
-    script.onerror = () => showError("Web App tidak dapat diakses.");
-
-    script.src = DATA_URL
-        + "?callback=" + encodeURIComponent(callbackName)
-        + "&_=" + Date.now();
-
-    document.head.appendChild(script);
 }
 
 function rhymeKey(text) {
@@ -919,7 +901,7 @@ function prepareData(data) {
 
     $("loadHint").textContent = data.exportedAt
         ? `Pembaruan data: ${new Date(data.exportedAt).toLocaleString("id-ID")}`
-        : "Sumber data: Google Drive.";
+        : "Sumber data: ALFIYYAH.json.";
 
     startButton.disabled = false;
     startButton.textContent = "Mulai Latihan";
@@ -1090,6 +1072,11 @@ $("homeButton").addEventListener("click", () => {
     result.style.display = "none";
     home.style.display = "block";
 });
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./service-worker.js")
+        .catch(error => console.error("Service Worker gagal didaftarkan:", error));
+}
 
 loadOnlineData();
 
