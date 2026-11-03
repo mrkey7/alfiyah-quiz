@@ -120,8 +120,6 @@ h1, h2, p { margin-top: 0; }
 
 .section-choice { display:flex; flex-direction:row; align-items:center; justify-content:center; gap:7px; min-height:76px; padding:12px 8px; background:#24365b; color:#fff; border:1px solid #24365b; border-radius:12px; white-space:nowrap; }
 .section-choice span { color:#e2d8c4; font-size:10px; font-weight:400; }
-.section-choice:last-child { background:#e7decc; color:#33415f; border-color:#e1d7c4; }
-.section-choice:last-child span { color:#786f5e; }
 .section-choice:disabled { opacity:.45; }
 .section-choice strong { font-size:19px; line-height:1.25; }
 
