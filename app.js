@@ -27,6 +27,7 @@ async function loadOnlineData() {
     } catch (error) {
         status.textContent = "Gagal memuat data: " + error.message;
     }
+		status.textContent = "";
 }
 
 function rhymeKey(text) {
