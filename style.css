@@ -240,9 +240,12 @@ h1, h2, p { margin-top: 0; }
 .quiz-top {
     display: flex;
     justify-content: space-between;
-    gap: 12px;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 8px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
 .track {
@@ -471,6 +474,7 @@ h1, h2, p { margin-top: 0; }
         font-size: 12px;
     }
 
+    .quiz-top { gap: 4px; font-size: 10px; }
     .actions { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 5px; margin-top: 8px; }
     .actions button { padding: 9px 10px; font-size: 12px; }
     #feedback { font-size: 11px; padding: 7px; }
