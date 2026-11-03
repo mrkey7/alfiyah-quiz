@@ -61,7 +61,6 @@ function prepareData(data) {
         const button = document.querySelector(`[data-section="${key}"]`);
         button.disabled = count < 4;
     });
-    status.textContent = "Data Alfiyyah siap digunakan.";
 }
 
 function getPlayableData(rows) {
