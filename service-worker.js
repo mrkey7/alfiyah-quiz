@@ -8,6 +8,7 @@ self.addEventListener("install", event => {
     event.waitUntil((async () => {
         const cache = await caches.open(CACHE_NAME);
         await cache.addAll([APP_INDEX, DATA_FILE]);
+        await precacheGoogleFonts(cache);
         await self.skipWaiting();
     })());
 });
@@ -88,4 +89,32 @@ async function cacheFirst(request) {
     }
 
     return response;
+}
+
+async function precacheGoogleFonts(cache) {
+    const cssUrl = "https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap";
+
+    try {
+        const response = await fetch(cssUrl);
+        if (!response.ok) return;
+
+        await cache.put(cssUrl, response.clone());
+
+        const css = await response.text();
+        const fontUrls = css.split("url(")
+            .slice(1)
+            .map(part => part.split(")")[0])
+            .filter(url => url.startsWith("https://fonts.gstatic.com/"));
+
+        await Promise.all(fontUrls.map(async url => {
+            try {
+                const font = await fetch(url);
+                if (font.ok) await cache.put(url, font.clone());
+            } catch (error) {
+                console.warn("Font tidak dapat disimpan:", error);
+            }
+        }));
+    } catch (error) {
+        console.warn("Font Noto Naskh tidak dapat disimpan untuk offline:", error);
+    }
 }
