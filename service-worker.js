@@ -1,4 +1,4 @@
-const CACHE_NAME = "alfiyah-quiz-v3";
+const CACHE_NAME = "alfiyah-quiz-v4";
 const APP_BASE = new URL("./", self.location.href);
 const APP_INDEX = new URL("index.html", APP_BASE).href;
 const APP_STYLE = new URL("style.css", APP_BASE).href;
