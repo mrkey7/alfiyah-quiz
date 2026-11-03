@@ -24,7 +24,7 @@ body {
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-button, input { font: inherit; }
+button { font: inherit; }
 
 button {
     border: 0;
@@ -123,39 +123,12 @@ h1, h2, p { margin-top: 0; }
 .section-choice:disabled { opacity:.45; }
 .section-choice strong { font-size:19px; line-height:1.25; }
 
-.home-actions {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 24px;
-}
-
-.home-actions .primary {
-    min-width: 210px;
-    min-height: 52px;
-    background: #24365b;
-    font-size: 15px;
-}
-
-.home-actions .secondary {
-    min-height: 52px;
-    background: #e7decc;
-    color: #33415f;
-}
-
 .status {
     margin-top: 15px;
     color: var(--muted);
     font-size: 13px;
     line-height: 1.6;
     overflow-wrap: anywhere;
-}
-
-.source-info {
-    margin: 5px 0 0;
-    color: #8a806e;
-    font-size: 11px;
 }
 
 .home-footer {
@@ -176,13 +149,6 @@ h1, h2, p { margin-top: 0; }
     box-shadow: 0 8px 24px rgb(35 42 55 / 5%);
 }
 
-.load-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-}
-
 .primary, .secondary {
     min-height: 42px;
     padding: 10px 16px;
@@ -200,17 +166,6 @@ h1, h2, p { margin-top: 0; }
     color: #33415f;
 }
 
-.stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 22px;
-    margin-top: 14px;
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.stats strong { color: var(--ink); }
-
 #quiz {
     display: none;
     height: calc(100% - 18px);
@@ -227,12 +182,6 @@ h1, h2, p { margin-top: 0; }
 #quiz .options,
 #quiz .actions {
     flex: 0 0 auto;
-}
-
-.bait-stage {
-    flex: 1 1 auto;
-    min-height: 0;
-    margin-top: 8px;
 }
 
 .quiz-top {
@@ -270,6 +219,9 @@ h1, h2, p { margin-top: 0; }
 .bait-stage {
     position: relative;
     display: grid;
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-top: 8px;
     grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
     align-items: stretch;
     gap: 0;
@@ -350,11 +302,6 @@ h1, h2, p { margin-top: 0; }
     background: #f8fbff;
 }
 
-.option:hover:not(:disabled) {
-    border-color: #93b4f5;
-    background: #f8fbff;
-}
-
 .option.correct {
     border: 2px solid var(--good);
     background: var(--good-bg);
@@ -411,16 +358,6 @@ h1, h2, p { margin-top: 0; }
 
 .result-detail { color: var(--muted); }
 
-.notice {
-    margin-top: 18px;
-    padding: 12px 14px;
-    border-left: 3px solid #93b4f5;
-    background: #eff6ff;
-    color: #334155;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
 @media (max-width: 700px) {
     .app {
         width: calc(100% - 16px);
@@ -431,8 +368,6 @@ h1, h2, p { margin-top: 0; }
 
     .panel { padding: 10px; }
     .home-panel { padding: 0; }
-    .home-actions { flex-direction: column; }
-    .home-actions > button { width: 100%; }
     .section-choices { gap: 8px; }
     .section-choice { min-height: 66px; padding: 9px 5px; gap:5px; }
     .section-choice strong { font-size: 15px; }
@@ -583,35 +518,9 @@ h1, h2, p { margin-top: 0; }
         line-height: 1.4;
     }
 
-    .home-stats {
-        gap: 10px;
-        margin-top: clamp(10px, 1.5vh, 16px);
-    }
-
-    .home-stat {
-        padding: 10px;
-    }
-
-    .home-stat strong {
-        font-size: 24px;
-    }
-
-    .home-actions {
-        margin-top: clamp(10px, 1.5vh, 16px);
-    }
-
-    .home-actions .primary,
-    .home-actions .secondary {
-        min-height: 44px;
-    }
-
     .status {
         margin-top: clamp(7px, 1.1vh, 10px);
         line-height: 1.4;
-    }
-
-    .source-info {
-        margin-top: 3px;
     }
 
     .home-footer {
@@ -674,20 +583,6 @@ h1, h2, p { margin-top: 0; }
     .basmala {
         font-size: clamp(19px, 2vw, 24px);
         line-height: 1.3;
-    }
-
-    .home-stats,
-    .home-actions {
-        margin-top: 8px;
-    }
-
-    .home-stat {
-        padding: 7px;
-    }
-
-    .home-actions .primary,
-    .home-actions .secondary {
-        min-height: 40px;
     }
 
     .status {
