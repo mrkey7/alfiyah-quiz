@@ -888,10 +888,7 @@ function renderQuestion() {
     $("feedback").textContent = "";
     $("nextButton").disabled = true;
 
-    $("nextButton").textContent =
-        questionIndex === questions.length - 1
-            ? "Lihat Hasil"
-            : "Soal Berikutnya";
+    $("nextButton").textContent = "Soal Berikutnya";
 }
 
 function chooseAnswer(selectedButton, answer, correctAnswer) {
@@ -920,6 +917,10 @@ function chooseAnswer(selectedButton, answer, correctAnswer) {
     }
 
     $("score").textContent = correctCount;
+    $("nextButton").textContent =
+        questionIndex === questions.length - 1
+            ? "Lihat Hasil"
+            : "Soal Berikutnya";
     $("nextButton").disabled = false;
 
     $("progressBar").style.width =
