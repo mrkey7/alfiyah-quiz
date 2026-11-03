@@ -103,7 +103,6 @@ function startQuiz(sectionKey = "semua") {
     correctCount = 0;
     answeredCount = 0;
     answered = false;
-    $("quizAvailable").textContent = questions.length;
     clearInterval(timerInterval);
     quizStartedAt = Date.now();
     updateTimer();
@@ -151,7 +150,8 @@ function renderQuestion() {
 
     answered = false;
 
-    $("questionNumber").textContent = `Soal ${questionIndex + 1}`;
+    $("questionNumber").textContent = `${questionIndex + 1} dari ${questions.length}`;
+    $("quizAvailable").textContent = questions.length - questionIndex;
 
     $("score").textContent = correctCount;
     $("progressBar").style.width =
