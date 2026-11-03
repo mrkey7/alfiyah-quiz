@@ -4,14 +4,15 @@ const $ = id => document.getElementById(id);
 
 const DATA_URL = "./ALFIYYAH.json";
 const sections = {
-    awal: { label:"Alfiyyah Awal", start:1, end:334 },
-    tsani: { label:"Alfiyyah Tsani", start:335, end:668 },
-    tsalits: { label:"Alfiyyah Tsalits", start:669, end:1003 },
-    semua: { label:"Seluruh Alfiyyah", start:1, end:1003 }
+    awal: { label:"الألفية الأولى", start:1, end:334 },
+    tsani: { label:"الألفية الثانية", start:335, end:668 },
+    tsalits: { label:"الألفية الثالثة", start:669, end:1003 },
+    semua: { label:"الألفية كاملة", start:1, end:1003 }
 };
 let baitData = [], activeBaitData = [], questions = [];
 let questionIndex = 0, correctCount = 0, answeredCount = 0;
 let answered = false, selectedSection = "semua";
+let quizStartedAt = 0, timerInterval = null;
 const status = $("status"), home = $("home"), quiz = $("quiz"), result = $("result");
 document.querySelectorAll("[data-section]").forEach(button => {
     button.addEventListener("click", () => startQuiz(button.dataset.section));
@@ -59,7 +60,6 @@ function prepareData(data) {
         const count = getPlayableData(selected).length;
         const button = document.querySelector(`[data-section="${key}"]`);
         button.disabled = count < 4;
-        button.querySelector("span").textContent = `${count} bait tersedia`;
     });
     status.textContent = "Data Alfiyyah siap digunakan.";
 }
@@ -103,6 +103,11 @@ function startQuiz(sectionKey = "semua") {
     correctCount = 0;
     answeredCount = 0;
     answered = false;
+    $("quizAvailable").textContent = questions.length;
+    clearInterval(timerInterval);
+    quizStartedAt = Date.now();
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 1000);
     home.style.display = "none";
     quiz.style.display = "flex";
     result.style.display = "none";
@@ -146,8 +151,7 @@ function renderQuestion() {
 
     answered = false;
 
-    $("questionNumber").textContent =
-        `${sections[selectedSection].label} · Soal ${questionIndex + 1} dari ${questions.length}`;
+    $("questionNumber").textContent = `Soal ${questionIndex + 1}`;
 
     $("score").textContent = correctCount;
     $("progressBar").style.width =
@@ -230,7 +234,16 @@ $("nextButton").addEventListener("click", () => {
 });
 $("finishButton").addEventListener("click", showResult);
 
+function updateTimer() {
+    const seconds = Math.floor((Date.now() - quizStartedAt) / 1000);
+    const minutes = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const remainder = String(seconds % 60).padStart(2, "0");
+    $("timer").textContent = `${minutes}:${remainder}`;
+}
+
 function showResult() {
+    clearInterval(timerInterval);
+    timerInterval = null;
     quiz.style.display = "none";
     result.style.display = "block";
     const percent = answeredCount ? Math.round(correctCount / answeredCount * 100) : 0;
