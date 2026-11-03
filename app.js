@@ -4,10 +4,10 @@ const $ = id => document.getElementById(id);
 
 const DATA_URL = "./ALFIYYAH.json";
 const sections = {
-    awal: { label:"الألفية الأولى", start:1, end:334 },
-    tsani: { label:"الألفية الثانية", start:335, end:668 },
-    tsalits: { label:"الألفية الثالثة", start:669, end:1003 },
-    semua: { label:"الألفية كاملة", start:1, end:1003 }
+    awal: { start:1, end:334 },
+    tsani: { start:335, end:668 },
+    tsalits: { start:669, end:1003 },
+    semua: { start:1, end:1003 }
 };
 let baitData = [], activeBaitData = [], questions = [];
 let questionIndex = 0, correctCount = 0, answeredCount = 0;
