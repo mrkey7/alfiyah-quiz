@@ -210,10 +210,19 @@ h1, h2, p { margin-top: 0; }
     transition: width .2s ease;
 }
 
+.question-heading {
+    display: flex;
+    direction: ltr;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 9px;
+}
+
 .question-label {
-    margin: 0 0 9px;
+    margin: 0;
     color: var(--muted);
-    font-size: clamp(17px, 1.5vw, 25px);
+    font-size: clamp(16px, 1.5vw, 22px);
 }
 
 .bait-stage {
@@ -222,7 +231,7 @@ h1, h2, p { margin-top: 0; }
     flex: 1 1 auto;
     min-height: 0;
     margin-top: 8px;
-    grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: stretch;
     gap: 0;
     direction: rtl;
@@ -234,26 +243,22 @@ h1, h2, p { margin-top: 0; }
 
 .bait-half {
     min-width: 0;
-    min-height: 0;
-    height: 100%;
+    min-height: 100%;
     display: grid;
     align-items: center;
     justify-items: stretch;
-    padding: clamp(8px, 1.2vw, 18px) 16px;
+    padding: clamp(10px, 1.5vw, 20px);
     background: #f7f1e5;
     direction: rtl;
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
-    font-size: clamp(25px, 3vw, 42px);
-    line-height: 1.9;
+    font-size: clamp(28px, 3.2vw, 44px);
+    line-height: 1.8;
+    text-align: center;
     overflow-wrap: anywhere;
 }
 
 #rightHalf {
-    text-align: left;
-}
-
-#leftHalf {
-    text-align: right;
+    border-left: 1px solid #c9b995;
 }
 
 .bait-half.is-empty {
@@ -261,19 +266,13 @@ h1, h2, p { margin-top: 0; }
 }
 
 .bait-number {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: stretch;
-    width: auto;
-    height: 100%;
-    border-left: 1px solid #c9b995;
-    border-right: 1px solid #c9b995;
-    background: #efe7d8;
+    flex: 0 0 auto;
     color: #938365;
     font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
-    font-size: clamp(18px, 1.7vw, 25px);
+    font-size: clamp(17px, 1.5vw, 22px);
     font-weight: 500;
+    line-height: 1.4;
+    direction: rtl;
 }
 
 .options {
@@ -373,20 +372,31 @@ h1, h2, p { margin-top: 0; }
     .section-choice strong { font-size: 15px; }
     .section-choice span { font-size: 9px; }
 
+    .question-heading {
+        margin-bottom: 7px;
+    }
+
+    .question-label {
+        font-size: 15px;
+    }
+
+    .bait-number {
+        font-size: 16px;
+    }
+
     .bait-stage {
-        grid-template-columns: minmax(0, 1fr) 30px minmax(0, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        min-height: clamp(190px, 30vh, 320px);
         gap: 0;
         border-radius: 10px;
     }
 
     .bait-half {
-        padding: 8px 7px;
-        font-size: clamp(20px, min(5vw, 4vh), 29px);
-        line-height: 1.65;
-    }
-
-    .bait-number {
-        font-size: 17px;
+        min-height: 100%;
+        padding: 10px 7px;
+        font-size: clamp(25px, 6.5vw, 36px);
+        line-height: 1.7;
+        text-align: center;
     }
 
     .options {
@@ -396,9 +406,9 @@ h1, h2, p { margin-top: 0; }
     }
 
     .option {
-        min-height: clamp(46px, 7vh, 62px);
+        min-height: clamp(44px, 6vh, 56px);
         padding: 7px 9px;
-        font-size: clamp(19px, min(4.4vw, 3vh), 26px);
+        font-size: clamp(18px, 4.5vw, 23px);
         line-height: 1.5;
     }
 
@@ -416,41 +426,15 @@ h1, h2, p { margin-top: 0; }
 
 
 /* Tampilan adaptif: selain PC landscape standar */
-@media (max-width: 700px), (max-aspect-ratio: 3/2), (max-height: 500px) and (pointer: coarse) {
+@media (min-width: 701px) and (max-aspect-ratio: 3/2), (max-height: 500px) and (pointer: coarse) {
     .bait-stage {
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-rows: auto auto auto;
-    }
-
-    .bait-number {
-        grid-column: 1;
-        grid-row: 1;
-        justify-content: flex-end;
-        width: auto;
-        height: auto;
-        padding: 3px 12px;
-        border: 0;
-        border-bottom: 1px solid #c9b995;
-        font-size: 15px;
-    }
-
-    #rightHalf {
-        grid-column: 1;
-        grid-row: 2;
-    }
-
-    #leftHalf {
-        grid-column: 1;
-        grid-row: 3;
-        border-top: 1px solid #c9b995;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .bait-half {
-        height: auto;
-        min-height: clamp(68px, 12vh, 130px);
-        padding: 12px 14px;
-        font-size: clamp(22px, 3vw, 36px);
-        line-height: 1.65;
+        min-height: 100%;
+        padding: 10px;
+        font-size: clamp(24px, 3vw, 34px);
     }
 }
 
