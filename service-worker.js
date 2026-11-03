@@ -1,13 +1,15 @@
-const CACHE_NAME = "alfiyah-quiz-v1";
+const CACHE_NAME = "alfiyah-quiz-v2";
 const APP_BASE = new URL("./", self.location.href);
 const APP_INDEX = new URL("index.html", APP_BASE).href;
+const APP_STYLE = new URL("style.css", APP_BASE).href;
+const APP_SCRIPT = new URL("app.js", APP_BASE).href;
 const DATA_FILE = new URL("ALFIYYAH.json", APP_BASE).href;
 const SCOPE_PATH = APP_BASE.pathname;
 
 self.addEventListener("install", event => {
     event.waitUntil((async () => {
         const cache = await caches.open(CACHE_NAME);
-        await cache.addAll([APP_INDEX, DATA_FILE]);
+        await cache.addAll([APP_INDEX, APP_STYLE, APP_SCRIPT, DATA_FILE]);
         await precacheGoogleFonts(cache);
         await self.skipWaiting();
     })());
@@ -48,6 +50,10 @@ self.addEventListener("fetch", event => {
         return;
     }
 
+    if (url.pathname === new URL(APP_STYLE).pathname || url.pathname === new URL(APP_SCRIPT).pathname) {
+        event.respondWith(networkFirst(request));
+        return;
+    }
     if (request.mode === "navigate") {
         event.respondWith(networkFirst(request, APP_INDEX));
         return;
