@@ -132,14 +132,33 @@ h1, h2, p { margin-top: 0; }
 }
 
 .home-footer {
+    position: relative;
     margin: 0;
-    padding: 13px 16px;
+    padding: 13px 42px;
     border-top: 1px solid #e2d8c6;
     color: #8a806e;
     font-size: 10px;
     letter-spacing: .12em;
     text-align: center;
 }
+
+.cache-reset {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    transform: translateY(-50%);
+    border: 1px solid #c9bea9;
+    border-radius: 5px;
+    background: transparent;
+    color: #8a806e;
+    font-size: 10px;
+    line-height: 1;
+}
+
+.cache-reset:hover { background: #eee5d5; }
 
 .panel {
     padding: clamp(17px, 2vw, 30px);
