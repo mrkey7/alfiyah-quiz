@@ -66,7 +66,7 @@ async function networkFirst(request, cacheKey = request) {
     const cache = await caches.open(CACHE_NAME);
 
     try {
-        const response = await fetch(request);
+        const response = await fetch(request, { cache: "no-cache" });
 
         if (response && (response.ok || response.type === "opaque")) {
             try {
