@@ -639,7 +639,7 @@ h1, h2, p { margin-top: 0; }
     .bait-half {
         min-height: 0;
         padding: 4px 8px;
-        font-size: clamp(28px, 10vw, 60px); 
+        font-size: clamp(28px, 9vw, 55px); 
 				/*clamp(nilai minimum, nilai fleksibel, nilai maksimum) */
 				line-height: 1.3;
     }
