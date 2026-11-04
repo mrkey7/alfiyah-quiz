@@ -261,11 +261,6 @@ h1, h2, p { margin-top: 0; }
     background: #f7f1e5;
 }
 
-.bait-stage::before {
-    content: attr(data-number);
-    display: none;
-}
-
 .bait-half {
     min-width: 0;
     min-height: 100%;
@@ -470,8 +465,35 @@ h1, h2, p { margin-top: 0; }
 }
 
 
-/* Tampilan adaptif: selain PC landscape standar */
-@media (min-width: 701px) and (max-aspect-ratio: 3/2), (max-height: 500px) and (pointer: coarse) {
+/* PC portrait: mengikuti susunan bait Android portrait */
+@media (min-width: 701px) and (max-aspect-ratio: 3/2) {
+    .bait-stage {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+    }
+
+    #rightHalf {
+        grid-row: 1;
+        grid-column: 1;
+        border-left: 0;
+        border-bottom: 1px solid #c9b995;
+    }
+
+    #leftHalf {
+        grid-row: 2;
+        grid-column: 1;
+    }
+
+    .bait-half {
+        min-height: 0;
+        padding: 10px;
+        font-size: clamp(28px, 3vw, 42px);
+        line-height: 1.4;
+    }
+}
+
+/* Perangkat sentuh landscape berukuran ringkas */
+@media (max-height: 500px) and (pointer: coarse) {
     .bait-stage {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -554,42 +576,6 @@ h1, h2, p { margin-top: 0; }
 
     .home-footer {
         padding: 9px 16px;
-    }
-
-    .bait-stage {
-        grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr);
-        grid-template-rows: minmax(0, 1fr);
-    }
-
-    #rightHalf {
-        grid-row: 1;
-        grid-column: 1;
-        border-left: 0;
-    }
-
-    #leftHalf {
-        grid-row: 1;
-        grid-column: 3;
-    }
-
-    #baitNumber { display: none; }
-
-    .bait-stage::before {
-        grid-row: 1;
-        grid-column: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2px;
-        border-left: 1px solid #c9b995;
-        border-right: 1px solid #c9b995;
-        color: #938365;
-        font-family: "Noto Naskh Arabic", "Amiri", "Traditional Arabic", serif;
-        font-size: clamp(13px, 1.2vw, 17px);
-        line-height: 1.4;
-        text-align: center;
-        direction: rtl;
-        overflow-wrap: anywhere;
     }
 
 	.bait-half {
@@ -795,6 +781,4 @@ h1, h2, p { margin-top: 0; }
         overflow-wrap: anywhere;
     }
 
-    #baitNumber { display: block; }
-    .bait-stage::before { display: none; }
 }
