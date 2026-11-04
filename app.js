@@ -185,6 +185,7 @@ function renderQuestion() {
     $("rightHalf").classList.toggle("is-empty", askFirst);
     $("leftHalf").classList.toggle("is-empty", !askFirst);
     $("baitNumber").textContent = String(item["ن"] ?? item["نمر"] ?? "");
+    $("baitStage").dataset.number = String(item["ن"] ?? item["نمر"] ?? "");
 
     const options = $("options");
     options.replaceChildren();
