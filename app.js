@@ -3,6 +3,7 @@
 const $ = id => document.getElementById(id);
 
 const DATA_URL = "./ALFIYYAH.json";
+const SHOW_CACHE_RESET = true;
 const sections = {
     awal: { start:1, end:334 },
     tsani: { start:335, end:668 },
@@ -14,6 +15,28 @@ let questionIndex = 0, correctCount = 0, answeredCount = 0;
 let answered = false, selectedSection = "semua";
 let quizStartedAt = 0, timerInterval = null;
 const status = $("status"), home = $("home"), quiz = $("quiz"), result = $("result");
+
+const cacheReset = $("cacheReset");
+cacheReset.hidden = !SHOW_CACHE_RESET;
+cacheReset.addEventListener("click", async () => {
+    if (!confirm("Hapus cache Alfiyah Quiz dan muat ulang aplikasi?")) return;
+
+    cacheReset.disabled = true;
+    try {
+        const keys = await caches.keys();
+        await Promise.all(
+            keys.filter(key => key.startsWith("alfiyah-quiz-")).map(key => caches.delete(key))
+        );
+
+        const registration = await navigator.serviceWorker?.getRegistration("./");
+        if (registration) await registration.unregister();
+
+        location.reload();
+    } catch (error) {
+        cacheReset.disabled = false;
+        alert("Cache gagal dihapus: " + error.message);
+    }
+});
 document.querySelectorAll("[data-section]").forEach(button => {
     button.addEventListener("click", () => startQuiz(button.dataset.section));
 });
