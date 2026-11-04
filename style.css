@@ -247,7 +247,7 @@ h1, h2, p { margin-top: 0; }
 .bait-stage {
     position: relative;
     display: grid;
-    flex: 1 1 auto;
+    flex: 0 1 42%;
     min-height: 0;
     margin-top: 8px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -304,6 +304,8 @@ h1, h2, p { margin-top: 0; }
 
 .options {
     display: grid;
+    flex: 1 1 0;
+    grid-auto-rows: minmax(0, 1fr);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
     margin-top: 18px;
@@ -414,7 +416,7 @@ h1, h2, p { margin-top: 0; }
     .bait-stage {
         grid-template-columns: minmax(0, 1fr);
         grid-template-rows: repeat(2, minmax(0, 1fr));
-        min-height: clamp(250px, 40vh, 380px);
+        min-height: clamp(190px, 30vh, 280px);
         gap: 0;
         border-radius: 10px;
     }
@@ -645,7 +647,7 @@ h1, h2, p { margin-top: 0; }
 @media (pointer: coarse) and (orientation: portrait) {
     .bait-stage {
         flex: 0 0 auto;
-        height: clamp(190px, 30vh, 270px);
+        height: clamp(150px, 22vh, 210px);
         min-height: 0;
         grid-template-columns: minmax(0, 1fr) !important;
         grid-template-rows: repeat(2, minmax(0, 1fr)) !important;
