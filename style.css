@@ -599,6 +599,7 @@ h1, h2, p { margin-top: 0; }
     #baitNumber { display: none; }
 
     .bait-stage::before {
+        content: attr(data-number);
         grid-row: 1;
         grid-column: 2;
         display: flex;
